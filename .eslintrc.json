@@ -1,5 +1,6 @@
 {
 	"extends": "next/core-web-vitals",
+	"plugins": ["@typescript-eslint"],
 	"rules": {
 		"react/jsx-key": "error",
 		"@typescript-eslint/no-var-requires": "off",
