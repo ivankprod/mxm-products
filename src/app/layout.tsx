@@ -27,7 +27,7 @@ export default function RootLayout({
 			<body className={inter.className}>
 				<AntdRegistry>
 					<ThemeProvider>
-						<Layout style={{ height: "100vh" }}>
+						<Layout style={{ minHeight: "100vh" }}>
 							<Header style={{
 								display: "flex",
 								alignItems: "center",
