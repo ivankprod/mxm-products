@@ -1,0 +1,40 @@
+name: ci
+on:
+  pull_request:
+    types:
+      - opened
+    branches:
+      - main
+      - master
+
+jobs:
+  ci:
+    name: ci
+    strategy:
+      matrix:
+        node-version: [ '20' ]
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+    env:
+      working-directory: ./
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: ${{ env.working-directory }}/node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+        working-directory: ${{ env.working-directory }}
+
+      - name: ESLint
+        run: npm run lint
+        working-directory: ${{ env.working-directory }}
