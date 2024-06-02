@@ -1,7 +1,11 @@
+import StoreProvider from "@/app/storeProvider";
+
+import ProductsList from "@/components/productsList";
+
 export default function Products() {
 	return (
-		<div>
-			Products page
-		</div>
+		<StoreProvider>
+			<ProductsList />
+		</StoreProvider>
 	);
 }
