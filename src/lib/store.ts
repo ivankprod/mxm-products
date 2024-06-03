@@ -1,26 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { useLocalStorageValue } from "@react-hookz/web";
 
 import { apiSlice } from "@/lib/features/api";
 
-export const makeStore = () => {
-	/* eslint-disable */
-	const { value, set } = useLocalStorageValue("state", {
-		defaultValue: {},
-		initializeWithValue: false
-	});
-
-	/* eslint-enable */
+export const makeStore = (persistedState: any) => {
 	const store = configureStore({
 		reducer: combineReducers({
 			[apiSlice.reducerPath]: apiSlice.reducer
 		}),
-		preloadedState: value,
+		preloadedState: persistedState,
 		middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware)
-	});
-
-	store.subscribe(() => {
-		set(store.getState());
 	});
 
 	return store;

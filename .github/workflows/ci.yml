@@ -1,8 +1,7 @@
 name: ci
 on:
   pull_request:
-    types:
-      - opened
+    types: [assigned, opened, synchronize, reopened]
     branches:
       - main
       - master
