@@ -6,6 +6,8 @@ import { Card, Flex, List, Result, Select, Space, Spin } from "antd";
 
 import { useGetProductsQuery } from "@/lib/features/api";
 
+import styles from "./productsList.module.css";
+
 const PerPageOptions = [
 	{ label: "8", value: 8 },
 	{ label: "16", value: 16 },
@@ -48,12 +50,12 @@ export const ProductsList: React.FC = () => {
 		}
 	} else if (isSuccess) {
 		content = (
-			<Flex vertical style={{ width: "80%" }}>
-				<Flex style={{ alignSelf: "flex-end", marginBottom: 24 }}>
-					<Space>На странице:</Space>
+			<Flex className={styles["cards-container"]} vertical>
+				<Flex className={styles["filter-container"]} style={{ marginBottom: 24 }}>
+					<Space style={{ justifyContent: "center" }}>На странице:</Space>
 					<Select
 						value={shown}
-						style={{ width: 160, marginLeft: 12 }}
+						style={{ width: 160 }}
 						options={PerPageOptions}
 						onChange={(value) => {
 							setShown(() => value);
