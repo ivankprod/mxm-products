@@ -1,0 +1,18 @@
+.cards-container {
+	width: 80%;
+	
+	@media screen and (width <= 768px) {
+		width: 100%;
+	}
+}
+
+.filter-container {
+	justify-content: center;
+	align-self: flex-end;
+	gap: 12px;
+
+	@media screen and (width <= 768px) {
+		flex-direction: column;
+		align-self: center;
+	}
+}

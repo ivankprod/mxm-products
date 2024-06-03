@@ -21,5 +21,13 @@ a {
 	}
 }
 
+.content-container {
+	padding: 48px 148px;
+
+	@media screen and (width <= 768px) {
+		padding: 48px;
+	}
+}
+
 .ant-menu-item::after { bottom: 1px !important; }
 .ant-list-grid .ant-col > .ant-list-item { margin-block-end: 24px !important; }

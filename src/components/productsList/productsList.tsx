@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Card, Flex, List, Result, Select, Space, Spin } from "antd";
 
 import { useGetProductsQuery } from "@/lib/features/api";
+
+import styles from "./productsList.module.css";
 
 const PerPageOptions = [
 	{ label: "8", value: 8 },
@@ -20,7 +23,7 @@ export const ProductsList: React.FC = () => {
 		isSuccess,
 		isError,
 		error
-	} = useGetProductsQuery({ limit: shown });
+	} = useGetProductsQuery({ limit: shown != 20 ? shown : undefined });
 
 	let content;
 
@@ -47,12 +50,12 @@ export const ProductsList: React.FC = () => {
 		}
 	} else if (isSuccess) {
 		content = (
-			<Flex vertical style={{ width: "80%" }}>
-				<Flex style={{ alignSelf: "flex-end", marginBottom: 24 }}>
-					<Space>На странице:</Space>
+			<Flex className={styles["cards-container"]} vertical>
+				<Flex className={styles["filter-container"]} style={{ marginBottom: 24 }}>
+					<Space style={{ justifyContent: "center" }}>На странице:</Space>
 					<Select
 						value={shown}
-						style={{ width: 160, marginLeft: 12 }}
+						style={{ width: 160 }}
 						options={PerPageOptions}
 						onChange={(value) => {
 							setShown(() => value);
@@ -68,11 +71,17 @@ export const ProductsList: React.FC = () => {
 								key={item.id}
 								hoverable
 								cover={
-									<img
-										width={"100%"}
-										height={240}
+									<Image
+										width={0}
+										height={0}
+										sizes="100vw"
 										src={item.image}
-										style={{ objectFit: "contain" }}
+										priority
+										style={{
+											width: "100%",
+											height: 240,
+											objectFit: "contain"
+										}}
 										alt={item.title}
 									/>
 								}

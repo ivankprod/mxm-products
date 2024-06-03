@@ -5,11 +5,14 @@ import { usePathname } from "next/navigation";
 
 import { Menu } from "antd";
 
+import styles from "./navigation.module.css";
+
 export const Navigation: React.FC = () => {
 	const pathname = usePathname();
 
 	return (
 		<Menu
+			className={styles.menu}
 			theme="light"
 			mode="horizontal"
 			items={[
@@ -22,7 +25,7 @@ export const Navigation: React.FC = () => {
 				}
 			]}
 			selectedKeys={[pathname]}
-			style={{ flex: 1, padding: "0 148px" }}
+			style={{ margin: "0 auto" }}
 		/>
 	)
 };

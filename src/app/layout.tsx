@@ -32,14 +32,14 @@ export default function RootLayout({
 								display: "flex",
 								alignItems: "center",
 								padding: 0,
-								backgroundColor: "#fff" /* т. к. в ThemeProvider не работает */
+								backgroundColor: "#fff", /* т. к. в ThemeProvider не работает */
+								boxShadow: "0px 0px 20px #00000010"
 							}}>
 								<Navigation />
 							</Header>
-							<Content style={{
+							<Content className="content-container" style={{
 								display: "flex",
-								justifyContent: "center",
-								padding: "48px 148px"
+								justifyContent: "center"
 							}}>
 								{children}
 							</Content>
