@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Card, Flex, List, Result, Select, Space, Spin } from "antd";
 
 import { useGetProductsQuery } from "@/lib/features/api";
@@ -20,7 +21,7 @@ export const ProductsList: React.FC = () => {
 		isSuccess,
 		isError,
 		error
-	} = useGetProductsQuery({ limit: shown });
+	} = useGetProductsQuery({ limit: shown != 20 ? shown : undefined });
 
 	let content;
 
@@ -68,11 +69,17 @@ export const ProductsList: React.FC = () => {
 								key={item.id}
 								hoverable
 								cover={
-									<img
-										width={"100%"}
-										height={240}
+									<Image
+										width={0}
+										height={0}
+										sizes="100vw"
 										src={item.image}
-										style={{ objectFit: "contain" }}
+										priority
+										style={{
+											width: "100%",
+											height: 240,
+											objectFit: "contain"
+										}}
 										alt={item.title}
 									/>
 								}

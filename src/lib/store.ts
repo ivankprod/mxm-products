@@ -1,14 +1,17 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import { apiSlice } from "@/lib/features/api";
+import { usePersistedState } from "@/lib/hooks";
 
 export const makeStore = () => {
+	const { value } = usePersistedState();
+
 	return configureStore({
-		reducer: {
+		reducer: combineReducers({
 			[apiSlice.reducerPath]: apiSlice.reducer
-		},
-		middleware: getDefaultMiddleware =>
-			getDefaultMiddleware().concat(apiSlice.middleware)
+		}),
+		preloadedState: value,
+		middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware)
 	});
 };
 
