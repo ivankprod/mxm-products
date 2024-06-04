@@ -6,7 +6,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint && stylelint src/**"
 	},
 	"dependencies": {
 		"@ant-design/icons": "^5.3.7",
@@ -27,6 +27,8 @@
 		"@typescript-eslint/eslint-plugin": "^7.10.0",
 		"eslint": "^8",
 		"eslint-config-next": "14.2.3",
+		"stylelint": "^16.6.1",
+		"stylelint-config-standard-scss": "^13.1.0",
 		"typescript": "^5"
 	}
 }

@@ -1,9 +1,5 @@
 .cards-container {
 	width: 100%;
-	
-	@media screen and (width <= 768px) {
-		
-	}
 }
 
 .filter-wrapper {
