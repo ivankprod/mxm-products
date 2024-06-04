@@ -25,7 +25,6 @@ export const Navigation: React.FC = () => {
 				}
 			]}
 			selectedKeys={[pathname]}
-			style={{ margin: "0 auto" }}
 		/>
 	)
 };
