@@ -1,7 +1,0 @@
-.menu {
-	width: 80%;
-
-	@media screen and (width <= 1200px) {
-		width: auto;
-	}
-}

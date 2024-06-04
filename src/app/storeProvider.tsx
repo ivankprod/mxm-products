@@ -1,28 +1,28 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Provider } from "react-redux";
-import { useLocalStorageValue } from "@react-hookz/web";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
 import { makeStore, AppStore } from "@/lib/store";
 
 export const StoreProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const storeRef = useRef<AppStore>();
 
-	const { value, set } = useLocalStorageValue("state", {
-		defaultValue: {},
-		initializeWithValue: false
-	});
-
 	if (!storeRef.current) {
-		storeRef.current = makeStore(value);
-
-		storeRef.current.subscribe(() => {
-			set(storeRef.current!.getState());
-		});
+		storeRef.current = makeStore();
 	}
 
-	return <Provider store={storeRef.current}>{children}</Provider>;
+	const persistor = persistStore(storeRef.current);
+
+	return (
+		<Provider store={storeRef.current}>
+			<PersistGate loading={null} persistor={persistor}>
+				{children}
+			</PersistGate>
+		</Provider>
+	);
 };
 
 export default StoreProvider;

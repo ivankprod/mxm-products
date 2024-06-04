@@ -1,0 +1,22 @@
+.cards-container {
+	width: 100%;
+}
+
+.filter-wrapper {
+	align-items: center;
+	justify-content: space-between;
+
+	width: 100%;
+}
+
+.filter-container {
+	justify-content: center;
+	gap: 12px;
+
+	margin-bottom: 24px;
+
+	@media screen and (width <= 768px) {
+		flex-direction: column;
+		align-self: center;
+	}
+}

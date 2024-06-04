@@ -29,5 +29,26 @@ a {
 	}
 }
 
+.state-button {
+	margin-right: 16px;
+
+	@media screen and (width <= 540px) {
+		display: none !important;
+	}
+}
+
+.ant-menu-horizontal { border: none !important; }
 .ant-menu-item::after { bottom: 1px !important; }
+
+.ant-tabs {
+	@media screen and (width <= 768px) {
+		padding: 0 24px !important;
+	}
+}
+
 .ant-list-grid .ant-col > .ant-list-item { margin-block-end: 24px !important; }
+
+.ant-tabs .ant-tabs-tabpane {
+	display: flex;
+	justify-content: center;
+}
