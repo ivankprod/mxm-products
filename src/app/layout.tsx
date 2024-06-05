@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { AntdRegistry } from '@ant-design/nextjs-registry';
-import { Button, Layout } from "antd";
+import { Layout } from "antd";
 import { Header, Footer, Content } from "antd/lib/layout/layout";
 
 import "@/app/globals.css";
@@ -10,6 +10,7 @@ import "@/app/globals.css";
 import StoreProvider from "@/app/storeProvider";
 import ThemeProvider from "@/components/theme";
 import Navigation from "@/components/navigation";
+import { ResetStateButton } from "@/components/resetStateButton";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
@@ -39,7 +40,7 @@ export default function RootLayout({
 									boxShadow: "0px 0px 20px #00000010"
 								}}>
 									<Navigation />
-									<Button className="state-button">Сбросить состояние</Button>
+									<ResetStateButton />
 								</Header>
 								<Content className="content-container">
 									{children}

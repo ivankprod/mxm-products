@@ -17,8 +17,9 @@ export const localSlice = createSlice({
 		},
 		deleteProduct: (state, action: PayloadAction<TProduct>) => {
 			return state.filter((product) => product.id !== action.payload.id);
-		}
+		},
+		clearLocal: () => []
 	}
 });
 
-export const { addProduct, updateProduct, deleteProduct } = localSlice.actions;
+export const { addProduct, updateProduct, deleteProduct, clearLocal } = localSlice.actions;
