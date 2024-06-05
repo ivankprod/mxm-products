@@ -2,69 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Button, Flex, Select, Space, Switch, Table, TableProps, Tag } from "antd";
+import { Button, Flex, Select, Space, Switch, Table, Tag } from "antd";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { PerPageOptions } from "@/lib/constants";
+import { updateProduct, deleteProduct, addProduct } from "@/lib/features/local";
 import { TProduct, statusPublished, statusUnpublished } from "@/types/product";
 
 import styles from "./localProductsList.module.css";
-import { updateProduct, deleteProduct, addProduct } from "@/lib/features/local";
-
-const columns: TableProps<TProduct>["columns"] = [
-	{
-		title: "ID",
-		dataIndex: "id",
-		key: "id"
-	},
-	{
-		title: "Название",
-		dataIndex: "title",
-		key: "title",
-		render: (_, { id, title }) => <Link href={`/products/${id}`}>{title}</Link>
-	},
-	{
-		title: "Цена",
-		dataIndex: "price",
-		key: "price"
-	},
-	{
-		title: "Описание",
-		dataIndex: "description",
-		key: "description"
-	},
-	{
-		title: "Статус",
-		key: "status",
-		dataIndex: "status",
-		render: (_, { status }) => (
-			<Tag color={status?.color} key={status?.type}>
-				{status?.label.toUpperCase()}
-			</Tag>
-		)
-	},
-	{
-		title: "Действия",
-		key: "actions",
-		render: (_, product) => (
-			<Space>
-				<Button
-					onClick={() => {
-						useAppDispatch()(updateProduct(product));
-					}}
-					icon={<EditOutlined />}
-				></Button>
-				<Button
-					onClick={() => {
-						useAppDispatch()(deleteProduct(product));
-					}}
-					icon={<DeleteOutlined />}
-				></Button>
-			</Space>
-		)
-	}
-];
 
 export const LocalProductsList: React.FC = () => {
 	const [shown, setShown] = useState(PerPageOptions[0].value as number);
