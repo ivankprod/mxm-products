@@ -35,3 +35,4 @@ export const apiSlice = createApi({
 });
 
 export const { useGetProductsQuery, useGetProductByIDQuery } = apiSlice;
+export const clearApi = () => apiSlice.util.resetApiState();

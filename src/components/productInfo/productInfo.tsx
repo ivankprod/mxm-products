@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button, Card, Flex, Rate, Result, Space, Spin } from "antd";
+import { Button, Flex, Rate, Result, Space, Spin } from "antd";
 
 import { useGetProductByIDQuery } from "@/lib/features/api";
 

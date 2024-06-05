@@ -1,0 +1,7 @@
+.menu {
+	flex: 1 0 auto;
+
+	@media screen and (width <= 768px) {
+		flex: 0 0 auto;
+	}
+}

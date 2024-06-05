@@ -19,7 +19,9 @@ export const ProductsList: React.FC = () => {
 		isSuccess,
 		isError,
 		error
-	} = useGetProductsQuery({ limit: shown != 20 ? shown : undefined });
+	} = useGetProductsQuery({
+		limit: shown < (PerPageOptions[2].value as number) ? shown : undefined
+	});
 
 	let content!: JSX.Element;
 
@@ -53,9 +55,7 @@ export const ProductsList: React.FC = () => {
 						value={shown}
 						style={{ width: 160 }}
 						options={PerPageOptions}
-						onChange={(value) => {
-							setShown(() => value);
-						}}
+						onChange={(value) => setShown(value)}
 					/>
 				</Flex>
 				<List

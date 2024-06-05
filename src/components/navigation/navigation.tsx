@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import { Menu } from "antd";
+
+import styles from "./navigation.module.css";
 
 export const Navigation: React.FC = () => {
 	const pathname = usePathname();
 
 	return (
 		<Menu
+			className={styles.menu}
 			theme="light"
 			mode="horizontal"
 			items={[
@@ -23,7 +25,7 @@ export const Navigation: React.FC = () => {
 				}
 			]}
 			selectedKeys={["/" + pathname.split("/")[1]]}
-			style={{ minWidth: 0, flex: "auto", fontSize: 20 }}
+			style={{ minWidth: 0, fontSize: 20 }}
 		/>
 	);
 };
