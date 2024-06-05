@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import {
 	Button,
+	Empty,
 	Flex,
 	Input,
 	InputRef,
@@ -16,14 +17,14 @@ import {
 	Tooltip
 } from "antd";
 import { DeleteOutlined, EditOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { FilterDropdownProps } from "antd/es/table/interface";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { PerPageOptions } from "@/lib/constants";
-import { updateProduct, deleteProduct, addProduct } from "@/lib/features/local";
-import { TProduct, statusPublished, statusUnpublished } from "@/types/product";
+import { updateProduct, deleteProduct } from "@/lib/features/local";
+import { TProduct, statusPublished } from "@/types/product";
 
 import styles from "./localProductsList.module.css";
-import { FilterDropdownProps } from "antd/es/table/interface";
 
 type DataIndex = keyof TProduct;
 
@@ -91,13 +92,7 @@ export const LocalProductsList: React.FC = () => {
 					>
 						Применить
 					</Button>
-					<Button
-						type="link"
-						size="middle"
-						onClick={() => {
-							close();
-						}}
-					>
+					<Button type="link" size="middle" onClick={() => close()}>
 						Закрыть
 					</Button>
 				</Space>
@@ -136,23 +131,7 @@ export const LocalProductsList: React.FC = () => {
 					justify="flex-start"
 					style={{ flexGrow: 1 }}
 				>
-					<Button
-						type="primary"
-						icon={<PlusOutlined />}
-						onClick={() => {
-							//mock
-							dispatch(
-								addProduct({
-									id: Math.floor(Math.random() * 100),
-									key: String(Math.floor(Math.random() * 100)),
-									title: "Test",
-									description: "Test descfdddf",
-									price: Math.floor(Math.random() * 1000),
-									status: statusUnpublished
-								})
-							);
-						}}
-					>
+					<Button type="primary" icon={<PlusOutlined />} onClick={() => {}}>
 						Создать продукт
 					</Button>
 				</Flex>
@@ -170,14 +149,17 @@ export const LocalProductsList: React.FC = () => {
 						value={shown}
 						style={{ width: 160 }}
 						options={PerPageOptions}
-						onChange={(value) => {
-							setShown(value);
-						}}
+						onChange={(value) => setShown(value)}
 					/>
 				</Flex>
 			</Flex>
 			<Table
 				dataSource={productsFilteredByStatus}
+				locale={{
+					emptyText: (
+						<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет данных" />
+					)
+				}}
 				showSorterTooltip={{
 					title: "Нажмите для сортировки",
 					overlayStyle: { fontSize: 14 }
