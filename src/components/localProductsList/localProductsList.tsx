@@ -66,12 +66,12 @@ export const LocalProductsList: React.FC = () => {
 						style={{ width: 160 }}
 						options={PerPageOptions}
 						onChange={(value) => {
-							setShown(() => value);
+							setShown(value);
 						}}
 					/>
 				</Flex>
 			</Flex>
-			<Table dataSource={productsFilteredByStatus}>
+			<Table dataSource={productsFilteredByStatus} style={{ overflowX: "auto" }}>
 				<Table.Column title="ID" dataIndex="id" key="id" />
 				<Table.Column
 					title="Название"

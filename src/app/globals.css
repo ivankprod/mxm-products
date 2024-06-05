@@ -52,3 +52,5 @@ a {
 	display: flex;
 	justify-content: center;
 }
+
+.ant-table-wrapper .ant-spin-container { min-width: fit-content; }
