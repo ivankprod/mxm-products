@@ -26,14 +26,12 @@ export const LocalProductsList: React.FC = () => {
 		: products;
 
 	return (
-		<Flex className={styles["cards-container"]} vertical>
+		<Flex className={styles["cards-container"]} vertical gap="large">
 			<Flex className={styles["filter-wrapper"]} gap="large">
 				<Flex
 					className={styles["filter-container"]}
-					style={{
-						justifyContent: "flex-start",
-						flexGrow: 1
-					}}
+					justify="flex-start"
+					style={{ flexGrow: 1 }}
 				>
 					<Button
 						type="primary"
@@ -54,7 +52,7 @@ export const LocalProductsList: React.FC = () => {
 						Создать продукт
 					</Button>
 				</Flex>
-				<Flex className={styles["filter-container"]}>
+				<Flex gap="small" className={styles["filter-container"]}>
 					<Space style={{ justifyContent: "center" }}>Только опубликованные:</Space>
 					<Switch
 						onChange={(checked) => {
@@ -62,7 +60,7 @@ export const LocalProductsList: React.FC = () => {
 						}}
 					/>
 				</Flex>
-				<Flex className={styles["filter-container"]}>
+				<Flex gap="small" className={styles["filter-container"]}>
 					<Space style={{ justifyContent: "center" }}>На странице:</Space>
 					<Select
 						value={shown}

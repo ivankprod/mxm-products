@@ -45,8 +45,8 @@ export const ProductsList: React.FC = () => {
 		}
 	} else if (isSuccess) {
 		content = (
-			<Flex className={styles["cards-container"]} vertical>
-				<Flex className={styles["filter-container"]} style={{ marginBottom: 24 }}>
+			<Flex className={styles["cards-container"]} vertical gap="large">
+				<Flex className={styles["filter-container"]} gap="small">
 					<Space style={{ justifyContent: "center" }}>На странице:</Space>
 					<Select
 						value={shown}

@@ -9,7 +9,6 @@
 .filter-container {
 	justify-content: center;
 	align-self: flex-end;
-	gap: 12px;
 
 	@media screen and (width <= 768px) {
 		flex-direction: column;
