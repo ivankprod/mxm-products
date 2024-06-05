@@ -1,70 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { Button, Flex, Select, Space, Switch, Table, TableProps, Tag } from "antd";
+import { Button, Flex, Select, Space, Switch, Table, Tag, Tooltip } from "antd";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { PerPageOptions } from "@/lib/constants";
+import { updateProduct, deleteProduct, addProduct } from "@/lib/features/local";
 import { TProduct, statusPublished, statusUnpublished } from "@/types/product";
 
 import styles from "./localProductsList.module.css";
-import { updateProduct, deleteProduct, addProduct } from "@/lib/features/local";
-
-const columns: TableProps<TProduct>["columns"] = [
-	{
-		title: "ID",
-		dataIndex: "id",
-		key: "id"
-	},
-	{
-		title: "Название",
-		dataIndex: "title",
-		key: "title",
-		render: (_, { id, title }) => <Link href={`/products/${id}`}>{title}</Link>
-	},
-	{
-		title: "Цена",
-		dataIndex: "price",
-		key: "price"
-	},
-	{
-		title: "Описание",
-		dataIndex: "description",
-		key: "description"
-	},
-	{
-		title: "Статус",
-		key: "status",
-		dataIndex: "status",
-		render: (_, { status }) => (
-			<Tag color={status?.color} key={status?.type}>
-				{status?.label.toUpperCase()}
-			</Tag>
-		)
-	},
-	{
-		title: "Действия",
-		key: "actions",
-		render: (_, product) => (
-			<Space>
-				<Button
-					onClick={() => {
-						useAppDispatch()(updateProduct(product));
-					}}
-					icon={<EditOutlined />}
-				></Button>
-				<Button
-					onClick={() => {
-						useAppDispatch()(deleteProduct(product));
-					}}
-					icon={<DeleteOutlined />}
-				></Button>
-			</Space>
-		)
-	}
-];
 
 export const LocalProductsList: React.FC = () => {
 	const [shown, setShown] = useState(PerPageOptions[0].value as number);
@@ -80,19 +25,17 @@ export const LocalProductsList: React.FC = () => {
 		: products;
 
 	return (
-		<Flex className={styles["cards-container"]} vertical>
-			<Flex className={styles["filter-wrapper"]} gap="large">
+		<Flex className={styles["cards-container"]} vertical gap="large">
+			<Flex className={styles["filter-wrapper"]} wrap gap="large">
 				<Flex
 					className={styles["filter-container"]}
-					style={{
-						justifyContent: "flex-start",
-						flexGrow: 1
-					}}
+					justify="flex-start"
+					style={{ flexGrow: 1 }}
 				>
 					<Button
 						type="primary"
 						icon={<PlusOutlined />}
-						onClick={() => {
+						onClick={() => { //mock
 							dispatch(
 								addProduct({
 									id: 1,
@@ -108,7 +51,7 @@ export const LocalProductsList: React.FC = () => {
 						Создать продукт
 					</Button>
 				</Flex>
-				<Flex className={styles["filter-container"]}>
+				<Flex gap="small" className={styles["filter-container"]}>
 					<Space style={{ justifyContent: "center" }}>Только опубликованные:</Space>
 					<Switch
 						onChange={(checked) => {
@@ -116,7 +59,7 @@ export const LocalProductsList: React.FC = () => {
 						}}
 					/>
 				</Flex>
-				<Flex className={styles["filter-container"]}>
+				<Flex gap="small" className={styles["filter-container"]}>
 					<Space style={{ justifyContent: "center" }}>На странице:</Space>
 					<Select
 						value={shown}
@@ -134,9 +77,6 @@ export const LocalProductsList: React.FC = () => {
 					title="Название"
 					dataIndex="title"
 					key="title"
-					render={(_, { id, title }: TProduct) => (
-						<Link href={`/products/${id}`}>{title}</Link>
-					)}
 				/>
 				<Table.Column title="Цена" dataIndex="price" key="price" />
 				<Table.Column title="Описание" dataIndex="description" key="description" />
@@ -155,18 +95,22 @@ export const LocalProductsList: React.FC = () => {
 					key="actions"
 					render={(_, product: TProduct) => (
 						<Space>
-							<Button
-								onClick={() => {
-									dispatch(updateProduct(product));
-								}}
-								icon={<EditOutlined />}
-							></Button>
-							<Button
-								onClick={() => {
-									dispatch(deleteProduct(product));
-								}}
-								icon={<DeleteOutlined />}
-							></Button>
+							<Tooltip title="Редактировать" overlayInnerStyle={{ fontSize: "0.8rem" }}>
+								<Button
+									onClick={() => {
+										dispatch(updateProduct(product));
+									}}
+									icon={<EditOutlined />}
+								></Button>
+							</Tooltip>
+							<Tooltip title="Удалить" overlayInnerStyle={{ fontSize: "0.8rem" }}>
+								<Button
+									onClick={() => {
+										dispatch(deleteProduct(product));
+									}}
+									icon={<DeleteOutlined />}
+								></Button>
+							</Tooltip>
 						</Space>
 					)}
 				/>

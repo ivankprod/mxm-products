@@ -1,10 +1,11 @@
 import { Flex } from "antd";
 
-export default function Home() {
+function NotFoundPage() {
 	return (
 		<Flex vertical align="center" justify="center" gap="middle" style={{ minHeight: 360 }}>
-			<h1>Maxima Products</h1>
-			<p>Итоговая работа для Maxima IT Online School</p>
+			<h2>Ошибка 404: Не найдено</h2>
 		</Flex>
 	);
 }
+
+export default NotFoundPage;

@@ -1,0 +1,5 @@
+.product-info {
+	@media screen and (width <= 980px) {
+		flex-direction: column;
+	}
+}

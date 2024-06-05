@@ -16,14 +16,16 @@ export const Navigation: React.FC = () => {
 				{
 					key: "/",
 					label: <Link href="/">Главная</Link>
-				}, {
+				},
+				{
 					key: "/products",
 					label: <Link href="/products">Продукты</Link>
 				}
 			]}
-			selectedKeys={[pathname]}
+			selectedKeys={["/" + pathname.split("/")[1]]}
+			style={{ minWidth: 0, flex: "auto", fontSize: 20 }}
 		/>
-	)
+	);
 };
 
 export default Navigation;

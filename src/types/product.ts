@@ -1,6 +1,6 @@
 type TProductStatus = {
 	type: "published" | "unpublished";
-	label: "Опубликован" | "Неопубликован";
+	label: "Опубликован" | "Не опубликован";
 	color: "success" | "orange";
 }
 
@@ -12,7 +12,7 @@ export const statusPublished: TProductStatus = {
 
 export const statusUnpublished: TProductStatus = {
 	type: "unpublished",
-	label: "Неопубликован",
+	label: "Не опубликован",
 	color: "orange"
 }
 

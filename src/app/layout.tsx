@@ -34,7 +34,7 @@ export default function RootLayout({
 									display: "flex",
 									alignItems: "center",
 									justifyContent: "space-around",
-									padding: 0,
+									padding: "0 10%",
 									backgroundColor: "#fff", /* т. к. в ThemeProvider не работает */
 									boxShadow: "0px 0px 20px #00000010"
 								}}>
