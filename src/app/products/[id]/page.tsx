@@ -4,7 +4,7 @@ import ProductInfo from "@/components/productInfo";
 
 interface IProductProps {
 	params: {
-		id: number;
+		id: string;
 	};
 }
 

@@ -6,12 +6,12 @@ import Image from "next/image";
 import { Card, Flex, List, Result, Select, Space, Spin } from "antd";
 
 import { useGetProductsQuery } from "@/lib/features/api";
-import { PerPageOptions } from "@/lib/constants";
+import { perPageOptions } from "@/lib/constants";
 
 import styles from "./productsList.module.css";
 
 export const ProductsList: React.FC = () => {
-	const [shown, setShown] = useState(PerPageOptions[0].value as number);
+	const [shown, setShown] = useState(perPageOptions[0].value as number);
 
 	const {
 		data: products,
@@ -20,7 +20,7 @@ export const ProductsList: React.FC = () => {
 		isError,
 		error
 	} = useGetProductsQuery({
-		limit: shown < (PerPageOptions[2].value as number) ? shown : undefined
+		limit: shown < (perPageOptions[2].value as number) ? shown : undefined
 	});
 
 	let content!: JSX.Element;
@@ -54,7 +54,7 @@ export const ProductsList: React.FC = () => {
 					<Select
 						value={shown}
 						style={{ width: 160 }}
-						options={PerPageOptions}
+						options={perPageOptions}
 						onChange={(value) => setShown(value)}
 					/>
 				</Flex>
@@ -62,7 +62,7 @@ export const ProductsList: React.FC = () => {
 					grid={{ gutter: 24, xs: 1, sm: 1, md: 2, lg: 3, xl: 4, xxl: 5 }}
 					dataSource={products}
 					renderItem={(item) => (
-						<Link href={`/products/${item.id}`}>
+						<Link href={`/products/${item.id}`} passHref>
 							<List.Item style={{ display: "flex" }}>
 								<Card
 									key={item.id}

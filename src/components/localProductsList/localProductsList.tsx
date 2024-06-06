@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
+import Link from "next/link";
 import {
 	Button,
 	Empty,
@@ -14,26 +15,32 @@ import {
 	Table,
 	TableColumnType,
 	Tag,
-	Tooltip
+	Tooltip,
+	notification
 } from "antd";
 import { DeleteOutlined, EditOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { FilterDropdownProps } from "antd/es/table/interface";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { PerPageOptions } from "@/lib/constants";
-import { updateProduct, deleteProduct } from "@/lib/features/local";
-import { TProduct, statusPublished } from "@/types/product";
+import { perPageOptions, statuses } from "@/lib/constants";
+import { useDeleteProductMutation } from "@/lib/features/api";
+import { deleteProduct } from "@/lib/features/local";
+import { TProduct } from "@/types/product";
 
 import styles from "./localProductsList.module.css";
 
 type DataIndex = keyof TProduct;
 
 export const LocalProductsList: React.FC = () => {
-	const [shown, setShown] = useState(PerPageOptions[0].value as number);
+	const [shown, setShown] = useState(perPageOptions[0].value as number);
 	const [filteredByStatus, setFilteredByStatus] = useState(false);
+
+	const [api, contextHolder] = notification.useNotification();
 
 	const products = useAppSelector((state) => state.local);
 	const dispatch = useAppDispatch();
+
+	const [deleteProductAPI] = useDeleteProductMutation();
 
 	const [searchText, setSearchText] = useState("");
 	const [searchedColumn, setSearchedColumn] = useState("");
@@ -41,7 +48,7 @@ export const LocalProductsList: React.FC = () => {
 
 	const productsFilteredByStatus = filteredByStatus
 		? products.filter((product) =>
-				product.status ? product.status === statusPublished : false
+				product.status ? product.status === statuses.published.value : false
 		  )
 		: products;
 
@@ -131,9 +138,11 @@ export const LocalProductsList: React.FC = () => {
 					justify="flex-start"
 					style={{ flexGrow: 1 }}
 				>
-					<Button type="primary" icon={<PlusOutlined />} onClick={() => {}}>
-						Создать продукт
-					</Button>
+					<Link href="/products/add" passHref>
+						<Button type="primary" icon={<PlusOutlined />}>
+							Создать продукт
+						</Button>
+					</Link>
 				</Flex>
 				<Flex gap="small" className={styles["filter-container"]}>
 					<Space style={{ justifyContent: "center" }}>Только опубликованные:</Space>
@@ -148,7 +157,7 @@ export const LocalProductsList: React.FC = () => {
 					<Select
 						value={shown}
 						style={{ width: 160 }}
-						options={PerPageOptions}
+						options={perPageOptions}
 						onChange={(value) => setShown(value)}
 					/>
 				</Flex>
@@ -173,11 +182,19 @@ export const LocalProductsList: React.FC = () => {
 				style={{ overflowX: "auto" }}
 			>
 				<Table.Column<TProduct>
-					title="ID"
-					dataIndex="id"
-					key="id"
-					defaultSortOrder="ascend"
-					sorter={(a, b) => a.id - b.id}
+					title="Дата создания"
+					dataIndex="createdAt"
+					key="createdAt"
+					sortDirections={["ascend", "descend", "ascend"]}
+					defaultSortOrder="descend"
+					sorter={(a, b) =>
+						a.createdAt && b.createdAt
+							? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+							: 0
+					}
+					render={(_, { createdAt }) =>
+						createdAt ? new Date(createdAt).toLocaleString() : "-"
+					}
 				/>
 				<Table.Column<TProduct>
 					title="Название"
@@ -201,11 +218,13 @@ export const LocalProductsList: React.FC = () => {
 					title="Статус"
 					key="status"
 					dataIndex="status"
-					render={(_, { status }) => (
-						<Tag color={status?.color} key={status?.type}>
-							{status?.label.toUpperCase()}
-						</Tag>
-					)}
+					render={(_, { status }) =>
+						status && (
+							<Tag color={statuses[status].color} key={statuses[status].value}>
+								{statuses[status].label.toUpperCase()}
+							</Tag>
+						)
+					}
 				/>
 				<Table.Column<TProduct>
 					title="Действия"
@@ -216,17 +235,37 @@ export const LocalProductsList: React.FC = () => {
 								title="Редактировать"
 								overlayInnerStyle={{ fontSize: "0.8rem" }}
 							>
-								<Button
-									onClick={() => {
-										dispatch(updateProduct(product));
-									}}
-									icon={<EditOutlined />}
-								></Button>
+								<Link href={`/products/${product.id}/edit`} passHref>
+									<Button icon={<EditOutlined />}></Button>
+								</Link>
 							</Tooltip>
 							<Tooltip title="Удалить" overlayInnerStyle={{ fontSize: "0.8rem" }}>
+								{contextHolder}
 								<Button
-									onClick={() => {
-										dispatch(deleteProduct(product));
+									onClick={async () => {
+										try {
+											await deleteProductAPI({
+												id: "1" // Mock, т.к. форматы ID разные
+											}).unwrap();
+
+											/* Очень странно, что уведомление здесь не работает,
+											   хотя в productUpdateForm после сабмита все прекрасно работает
+											*/
+											api.success({
+												message: "API",
+												description: "Продукт успешно удален",
+												placement: "top"
+											});
+
+											dispatch(deleteProduct(product));
+										} catch (e: any) {
+											// А здесь работает :D
+											api.error({
+												message: `API: Ошибка ${e?.status}`,
+												description: e?.data?.message,
+												placement: "top"
+											});
+										}
 									}}
 									icon={<DeleteOutlined />}
 								></Button>

@@ -8,7 +8,7 @@ import { useGetProductByIDQuery } from "@/lib/features/api";
 import styles from "./productInfo.module.css";
 
 interface IProductInfoProps {
-	id: number;
+	id: string;
 }
 
 export const ProductInfo: React.FC<IProductInfoProps> = ({ id }) => {
