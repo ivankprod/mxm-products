@@ -54,3 +54,5 @@ a {
 }
 
 .ant-table-wrapper .ant-spin-container { min-width: fit-content; }
+
+.ant-form-item .ant-form-item-explain-error { font-size: 0.8rem; }
