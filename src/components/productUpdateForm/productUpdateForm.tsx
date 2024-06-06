@@ -31,7 +31,10 @@ export const ProductUpdateForm: React.FC<IProductUpdateForm> = ({ productID }) =
 
 	const onSubmit: FormProps<TUpdateProductDTO>["onFinish"] = async (values) => {
 		try {
-			await updateProductAPI(values).unwrap();
+			await updateProductAPI({
+				...values,
+				id: "1" // Mock, т.к. форматы ID разные
+			}).unwrap();
 
 			api.success({
 				message: "API",

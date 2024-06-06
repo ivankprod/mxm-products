@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { Button, Flex, Rate, Result, Space, Spin } from "antd";
 
 import { useGetProductByIDQuery } from "@/lib/features/api";
@@ -38,6 +39,8 @@ export const ProductInfo: React.FC<IProductInfoProps> = ({ id }) => {
 			);
 		}
 	} else if (isSuccess) {
+		if (!product) notFound(); // Т. к. fakestoreapi.com отдает 200, а не 404 при отсутствии продукта
+
 		content = (
 			<Flex
 				className={styles["product-info"]}
