@@ -11,12 +11,10 @@ import {
 interface IGetParams {
 	limit?: number;
 	sort?: "asc" | "desc";
-	[key: string]: any;
 }
 
 interface IGetProductByID {
 	id: string;
-	params?: IGetParams;
 }
 
 const apiRoute = "/products";
@@ -51,13 +49,7 @@ export const apiSlice = createApi({
 			providesTags: ["Products"]
 		}),
 		getProductByID: builder.query<TProduct, IGetProductByID>({
-			query: (params) => {
-				const { params: otherParams } = params;
-
-				return otherParams
-					? { url: `${apiRoute}/${params.id}`, params: { ...otherParams } }
-					: { url: `${apiRoute}/${params.id}` };
-			},
+			query: (params) => ({ url: `${apiRoute}/${params.id}` }),
 			providesTags: ["Products"]
 		})
 	})
