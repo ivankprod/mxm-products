@@ -31,7 +31,11 @@ import styles from "./localProductsList.module.css";
 
 type DataIndex = keyof TProduct;
 
-export const LocalProductsList: React.FC = () => {
+interface ILocalProductsListProps {
+	loggedIn: boolean;
+}
+
+export const LocalProductsList: React.FC<ILocalProductsListProps> = ({ loggedIn }) => {
 	const [shown, setShown] = useState(perPageOptions[0].value as number);
 	const [filteredByStatus, setFilteredByStatus] = useState(false);
 
@@ -243,28 +247,36 @@ export const LocalProductsList: React.FC = () => {
 								{contextHolder}
 								<Button
 									onClick={async () => {
-										try {
-											await deleteProductAPI({
-												id: "1" // Mock, т.к. форматы ID разные
-											}).unwrap();
+										if (!loggedIn) {
+											api.error({
+												message: "Ошибка 403",
+												description: "Доступ запрещен",
+												placement: "top"
+											});
+										} else {
+											try {
+												await deleteProductAPI({
+													id: "1" // Mock, т.к. форматы ID разные
+												}).unwrap();
 
-											/* Очень странно, что уведомление здесь не работает,
+												/* Очень странно, что уведомление здесь не работает,
 											   хотя в productUpdateForm после сабмита все прекрасно работает
 											*/
-											api.success({
-												message: "API",
-												description: "Продукт успешно удален",
-												placement: "top"
-											});
+												api.success({
+													message: "API",
+													description: "Продукт успешно удален",
+													placement: "top"
+												});
 
-											dispatch(deleteProduct(product));
-										} catch (e: any) {
-											// А здесь работает :D
-											api.error({
-												message: `API: Ошибка ${e?.status}`,
-												description: e?.data?.message,
-												placement: "top"
-											});
+												dispatch(deleteProduct(product));
+											} catch (e: any) {
+												// А здесь работает :D
+												api.error({
+													message: `API: Ошибка ${e?.status}`,
+													description: e?.data?.message,
+													placement: "top"
+												});
+											}
 										}
 									}}
 									icon={<DeleteOutlined />}
