@@ -1,6 +1,7 @@
 {
 	"name": "mxm-products",
-	"version": "0.1.0",
+	"version": "1.0.0",
+	"author": "ivankprod",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
@@ -12,7 +13,6 @@
 		"@ant-design/icons": "^5.3.7",
 		"@ant-design/nextjs-registry": "^1.0.0",
 		"@reduxjs/toolkit": "^2.2.5",
-		"@types/uuid": "^9.0.8",
 		"antd": "^5.17.3",
 		"next": "14.2.3",
 		"next-auth": "^5.0.0-beta.19",
@@ -30,6 +30,7 @@
 		"@types/react-highlight-words": "^0.20.0",
 		"@types/redux-persist": "^4.3.1",
 		"@typescript-eslint/eslint-plugin": "^7.10.0",
+		"@types/uuid": "^9.0.8",
 		"eslint": "^8",
 		"eslint-config-next": "14.2.3",
 		"stylelint": "^16.6.1",
