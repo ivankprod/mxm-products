@@ -18,7 +18,7 @@ import {
 	Tooltip,
 	notification
 } from "antd";
-import { DeleteOutlined, EditOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined, SearchOutlined, ZoomInOutlined } from "@ant-design/icons";
 import { FilterDropdownProps } from "antd/es/table/interface";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -235,6 +235,14 @@ export const LocalProductsList: React.FC<ILocalProductsListProps> = ({ loggedIn 
 					key="actions"
 					render={(_, product) => (
 						<Space>
+							<Tooltip
+								title="Перейти к продукту"
+								overlayInnerStyle={{ fontSize: "0.8rem" }}
+							>
+								<Link href={`/products/${product.id}`} passHref>
+									<Button icon={<ZoomInOutlined />}></Button>
+								</Link>
+							</Tooltip>
 							<Tooltip
 								title="Редактировать"
 								overlayInnerStyle={{ fontSize: "0.8rem" }}
