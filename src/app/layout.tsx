@@ -7,10 +7,12 @@ import { Header, Footer, Content } from "antd/lib/layout/layout";
 
 import "@/app/globals.css";
 
+import { auth } from "@/auth";
 import StoreProvider from "@/app/storeProvider";
 import ThemeProvider from "@/components/theme";
 import Navigation from "@/components/navigation";
 import { ResetStateButton } from "@/components/resetStateButton";
+import { SignOut } from "@/components/auth";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
@@ -19,11 +21,13 @@ export const metadata: Metadata = {
 	description: "Test project for Maxima Online IT School"
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const session = await auth();
+
 	return (
 		<html lang="ru">
 			<body className={inter.className}>
@@ -41,6 +45,7 @@ export default function RootLayout({
 								}}>
 									<Navigation />
 									<ResetStateButton />
+									{session && <SignOut />}
 								</Header>
 								<Content className="content-container">
 									{children}
